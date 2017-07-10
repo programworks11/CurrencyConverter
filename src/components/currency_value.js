@@ -8,6 +8,10 @@ export default class CurrencyValue extends Component
   }
   render()
   {
-    return (<input value ={this.props.value} onChange={this.props.currencyValueChanged} />);
+    return (<div className="slds-form-element">
+              <div className="slds-form-element__control">
+                <input className="slds-input" value ={this.props.value} onChange={this.props.currencyValueChanged} />
+              </div>
+            </div>);
   }
 }

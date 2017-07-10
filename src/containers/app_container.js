@@ -30,44 +30,28 @@ class AppContainer extends Component
       return (<div>Please try after sometime.</div>);
     }
     return (<div>
-      <table>
-            <thead>
-              <tr>
-                <td>
+             <div className="slds-float_left">
+              <div className="slds-p-around_medium">
+                <div className="slds-grid slds-grid_vertical-align-start">
                   <h3>Currency converter</h3>
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-                <tr><td>Type in amount and select currency:</td></tr>
-                <tr>
-                  <td>
-                    <CurrencyValue value={this.state.inputCurrencyValue} currencyValueChanged={this.selectedInputCurrencyValueChanged}/>
-                  </td>
-                  <td>
-                    <CurrencyDropDown initValue={this.state.inputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedInputCurrency}/>
-                  </td>
-                </tr>
-                <tr><td>Converted amount:</td></tr>
-                <tr>
-                  <td>
-                    <CurrencyValue value={this.calculateTargetValue()} currencyValueChanged={this.selectedOutputCurrencyValueChanged}/>
-                  </td>
-                  <td>
-                    <CurrencyDropDown initValue={this.state.outputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedOutputCurrency}/>
-                  </td>
-                </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>
-                    <a href="http://fixer.io" style={{float:"right", color:"blue"}}>Disclaimer</a>
-                </td>
-              </tr>
-            </tfoot>
-        </table>
-        </div>
-    );
+                </div>
+                <div className="slds-grid slds-grid_vertical-align-start">
+                  Type in amount and select currency:
+                </div>
+                <div className="slds-grid slds-grid_vertical-align-start">
+                  <CurrencyValue value={this.state.inputCurrencyValue} currencyValueChanged={this.selectedInputCurrencyValueChanged}/>
+                  <CurrencyDropDown initValue={this.state.inputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedInputCurrency}/>
+                </div>
+                <div className="slds-grid slds-grid_vertical-align-start">
+                  <div><CurrencyValue value={this.calculateTargetValue()} currencyValueChanged={this.selectedOutputCurrencyValueChanged}/></div>
+                  <div><CurrencyDropDown initValue={this.state.outputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedOutputCurrency}/></div>
+                </div>
+                <div style={{color:"blue"}}>
+                  <a style={{float:"right"}} href="http://fixer.io"><u>Disclaimer</u></a>
+                </div>
+              </div>
+             </div>
+            </div>);
   }
   showDisclaimer()
   {

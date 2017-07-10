@@ -30,7 +30,10 @@ export function returnCurrencies(currenciesResult)
   let currenciesArray = []
   _.forEach(currenciesResult,function(value, key)
                               {
-                                currenciesArray = [...currenciesArray, key]
+                                if(key == 'USD' || key == 'CAD' || key=='EUR')
+                                   {
+                                      currenciesArray = [...currenciesArray, key]
+                                   }
                               });
   return currenciesArray;
 }

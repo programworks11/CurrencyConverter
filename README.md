@@ -8,7 +8,7 @@
 ### Behind the scenes
 
 1) Consumes api.fixer.io services 
-2) Populates the currency list based on the api
+2) Populates the currency list based on the api [only 3 used, CAD EUR USD in this feature branch]
 3) Calculates the exchange rate based on the api with EUR as base
 
 ### Technology stack 

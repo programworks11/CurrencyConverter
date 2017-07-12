@@ -109,7 +109,7 @@ class AppContainer extends Component
     const nominator = this.state.inputCurrencyValue * nominator1;
     const denominator = this.props.currencies[this.state.inputCurrency]
     //console.log("exchange value", nominator/denominator);
-    return nominator/denominator;
+    return _.round(nominator/denominator, 2);
   }
 }
 function mapStateToProps({currencies, currencyValue})

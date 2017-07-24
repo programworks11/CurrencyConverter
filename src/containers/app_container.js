@@ -11,17 +11,19 @@ class AppContainer extends Component
   constructor(props)
   {
     super(props);
-    this.state={inputCurrency:'AUD', outputCurrency:'AUD', inputCurrencyValue:0, outputCurrencyValue:0};
+    this.state={inputCurrency:'AUD', outputCurrency:'AUD', inputCurrencyValue:0, outputCurrencyValue:0, showDisclaimer:false};
     this.selectedInputCurrency=this.selectedInputCurrency.bind(this);
     this.selectedOutputCurrency=this.selectedOutputCurrency.bind(this);
     this.selectedInputCurrencyValueChanged=this.selectedInputCurrencyValueChanged.bind(this);
     this.selectedOutputCurrencyValueChanged=this.selectedOutputCurrencyValueChanged.bind(this);
     this.calculateTargetValue=this.calculateTargetValue.bind(this);
+    this.showDisclaimer = this.showDisclaimer.bind(this);
   }
   componentDidMount()
   {
       this.props.getLatestCurrencies();
   }
+
   render()
   {
     if(this.props.currencies && this.props.currencies instanceof TypeError)
@@ -43,20 +45,28 @@ class AppContainer extends Component
                   <CurrencyDropDown initValue={this.state.inputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedInputCurrency}/>
                 </div>
                 <div className="slds-grid slds-grid_vertical-align-start">
-                  <div><CurrencyValue value={this.calculateTargetValue()} currencyValueChanged={this.selectedOutputCurrencyValueChanged}/></div>
-                  <div><CurrencyDropDown initValue={this.state.outputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedOutputCurrency}/></div>
+                  Converted amount:
                 </div>
-                <div style={{color:"blue"}}>
-                  <a style={{float:"right"}} href="http://fixer.io"><u>Disclaimer</u></a>
+                <div className="slds-grid slds-grid_vertical-align-start">
+                  <CurrencyValue value={this.calculateTargetValue()} currencyValueChanged={this.selectedOutputCurrencyValueChanged}/>
+                  <CurrencyDropDown initValue={this.state.outputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedOutputCurrency}/>
+                </div>
+                <div style={{color:"blue"}} onClick={this.showDisclaimer}>  
+                  <u className="slds-float--right">Disclaimer</u>
+                </div>
+                <div ref="disclaimer" className='disclaimer-hidden'>
+                  Refer api.fixer.io for more details.
                 </div>
               </div>
              </div>
             </div>);
   }
-  showDisclaimer()
+
+  showDisclaimer(event)
   {
-      console.log("Show Disclaimer...");
-  }
+    this.state.showDisclaimer=!this.state.showDisclaimer;
+    this.refs.disclaimer.className = this.state.showDisclaimer ? 'disclaimer-visible':'disclaimer-hidden';
+  }  
   selectedInputCurrency(event)
   {
       //console.log("selectedInputCurrency", event.target.value);

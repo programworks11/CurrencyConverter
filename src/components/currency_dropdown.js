@@ -21,7 +21,7 @@ export default class CurrencyDropDown extends Component
     }
     let currencyList = returnCurrencies(this.props.currencies);
 
-    return (<div className="slds-form-element">
+    return (<div className="slds-form-element slds-m-left--medium">
               <div className="slds-form-element__control">
                 <div className="slds-select_container">
                   <select className="slds-select" value={this.props.initValue} onChange={this.props.selectCurrency} id="select-01">{currencyList.map(this.renderCurrencies)}</select>

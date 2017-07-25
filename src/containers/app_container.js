@@ -57,7 +57,7 @@ class AppContainer extends Component
                 <div style={{color:"blue"}} onClick={this.showDisclaimer}>
                   <u className="slds-float--right">Disclaimer</u>
                 </div>
-                <div ref="disclaimer" className='disclaimer-hidden'>
+                <div ref="disclaimer" className="disclaimer-hidden">
                   Refer api.fixer.io for more details.
                 </div>
               </div>

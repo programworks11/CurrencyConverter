@@ -1,3 +1,4 @@
+
 .disclaimer-visible
 {
     visibility: visible;
@@ -9,6 +10,14 @@
     visibility: hidden;
     display:block;
     margin: 25px 0px 0px 0px;
+}
+.disclaimer-link
+{
+  color: blue;  
+}
+.disclaimer-link:hover
+{
+  cursor: pointer;
 }
 .app-container
 {
@@ -30,4 +39,19 @@
     display: block;
     color: red;
     font-weight: bold;
+}
+.disabled-text
+{
+    background-color: transparent!important;    
+}
+input:focus::-webkit-input-placeholder{
+    color: transparent!important;
+}
+
+input:focus::-moz-placeholder{
+    color: transparent!important;
+}
+
+input:focus:-moz-placeholder{
+    color: transparent!important;
 }

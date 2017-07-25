@@ -8,11 +8,9 @@ export default class CurrencyDropDown extends Component
   constructor(props)
   {
     super(props);
-    //console.log("props",props);
   }
   renderCurrencies(curr)
   {
-    //console.log("Curr ", curr);
     return (<option key={curr} value={curr}>{curr}</option>);
   }
   render()

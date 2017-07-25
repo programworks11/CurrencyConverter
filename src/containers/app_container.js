@@ -49,10 +49,10 @@ class AppContainer extends Component
                   Converted amount:
                 </div>
                 <div className="slds-grid slds-grid_vertical-align-start">
-                  <CurrencyValue value={this.calculateTargetValue()} />
+                  <CurrencyValue disabledText="disabled" value={this.calculateTargetValue()} />
                   <CurrencyDropDown initValue={this.state.outputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedOutputCurrency}/>
                 </div>
-                <div style={{color:"blue"}} onClick={this.showDisclaimer}>
+                <div className="disclaimer-link" onClick={this.showDisclaimer}>
                   <u className="slds-float--right">Disclaimer</u>
                 </div>
                 <div ref="disclaimer" className="disclaimer-hidden">
@@ -72,15 +72,11 @@ class AppContainer extends Component
   }
   selectedInputCurrency(event)
   {
-      //console.log("selectedInputCurrency", event.target.value);
       this.setState({inputCurrency:event.target.value});
-      console.log(this.state);
   }
   selectedOutputCurrency(event)
   {
-      //console.log("selectedOutputCurrency", event.target.value);
       this.setState({outputCurrency:event.target.value});
-      console.log(this.state);
   }
   /*
   this method removes any special characters from input text field and adds 0. for decimals entered with . as starting character
@@ -93,11 +89,9 @@ class AppContainer extends Component
       // using lodash forEach method to iterate character array
       _.forEach(inputArray, function(value)
                             {
-                              //console.log("reg ex result", value.match(/([0-9]|[.])/ ));
                               //Add only 0 to 9 and . characters to final string
                               if(!value.match(/([0-9]|[.])/))
                               {
-                                //console.log("Replacing", value);
                                 inputTexts = inputTexts.replace(value,'');
                               }
                             }
@@ -120,23 +114,18 @@ class AppContainer extends Component
   */
   calculateTargetValue()
   {
-    //console.log("calculate target value", this.state);
     if(!this.state.inputCurrencyValue || !this.state.inputCurrency || !this.state.outputCurrency || !this.props.currencies)
     {
       return '';
     }
-    //console.log("nominator1", this.state.outputCurrency);
-    //console.log("nominator1", this.props.currencies);
     const nominator1 = this.props.currencies[this.state.outputCurrency];
     const nominator = this.state.inputCurrencyValue * nominator1;
     const denominator = this.props.currencies[this.state.inputCurrency]
-    //console.log("exchange value", nominator/denominator);
     return _.round(nominator/denominator, 2);
   }
 }
 function mapStateToProps({currencies, currencyValue})
 {
-  //console.log("Exchange rates", currencyValue);
   return {currencies: currencies};
 }
 function mapDispatchToProps(dispatch)

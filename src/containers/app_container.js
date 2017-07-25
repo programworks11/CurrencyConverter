@@ -29,14 +29,12 @@ class AppContainer extends Component
 
   render()
   {
-    if(this.props.currencies && this.props.currencies instanceof TypeError)
-    {
-      console.log("Error from CurrencyDropDown component", this.props.currencies);
-      return (<div>Please try after sometime.</div>);
-    }
     return (<div>
              <div className="slds-float_left">
               <div className="slds-p-around_medium">
+                <div className={this.props.currencies instanceof TypeError?"error-message-show":"error-message-hide"}>
+                  Try after sometime as we are running into issues at this point.
+                </div>
                 <div className="slds-grid slds-grid_vertical-align-start slds-text-heading--medium">
                   <h3>Currency converter</h3>
                 </div>

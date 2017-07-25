@@ -17,3 +17,15 @@
   padding:20px 20px 20px 20px;
   margin: 10px 10px 10px 10px;
 }
+.error-message-show
+{
+    visibility: visible;
+    display: block;
+    color: red;
+}
+.error-message-hide
+{
+    visibility: hidden;
+    display: block;
+    color: red;
+}

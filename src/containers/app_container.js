@@ -6,16 +6,19 @@ import {getLatestCurrencies} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import _ from 'lodash';
 
+
+/*
+This component is container component which has access to state of the application
+*/
 class AppContainer extends Component
 {
   constructor(props)
   {
     super(props);
-    this.state={inputCurrency:'AUD', outputCurrency:'AUD', inputCurrencyValue:0, outputCurrencyValue:0, showDisclaimer:false};
+    this.state={inputCurrency:'AUD', outputCurrency:'USD', inputCurrencyValue:'', outputCurrencyValue:'', showDisclaimer:false};
     this.selectedInputCurrency=this.selectedInputCurrency.bind(this);
     this.selectedOutputCurrency=this.selectedOutputCurrency.bind(this);
     this.selectedInputCurrencyValueChanged=this.selectedInputCurrencyValueChanged.bind(this);
-    this.selectedOutputCurrencyValueChanged=this.selectedOutputCurrencyValueChanged.bind(this);
     this.calculateTargetValue=this.calculateTargetValue.bind(this);
     this.showDisclaimer = this.showDisclaimer.bind(this);
   }
@@ -34,24 +37,24 @@ class AppContainer extends Component
     return (<div>
              <div className="slds-float_left">
               <div className="slds-p-around_medium">
-                <div className="slds-grid slds-grid_vertical-align-start">
+                <div className="slds-grid slds-grid_vertical-align-start slds-text-heading--medium">
                   <h3>Currency converter</h3>
                 </div>
-                <div className="slds-grid slds-grid_vertical-align-start">
+                <div className="slds-grid slds-grid_vertical-align-start slds-text-heading--small slds-m-bottom--small slds-m-top--small">
                   Type in amount and select currency:
                 </div>
                 <div className="slds-grid slds-grid_vertical-align-start">
                   <CurrencyValue value={this.state.inputCurrencyValue} currencyValueChanged={this.selectedInputCurrencyValueChanged}/>
                   <CurrencyDropDown initValue={this.state.inputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedInputCurrency}/>
                 </div>
-                <div className="slds-grid slds-grid_vertical-align-start">
+                <div className="slds-grid slds-grid_vertical-align-start slds-text-heading--small slds-m-bottom--small slds-m-top--small">
                   Converted amount:
                 </div>
                 <div className="slds-grid slds-grid_vertical-align-start">
-                  <CurrencyValue value={this.calculateTargetValue()} currencyValueChanged={this.selectedOutputCurrencyValueChanged}/>
+                  <CurrencyValue value={this.calculateTargetValue()} />
                   <CurrencyDropDown initValue={this.state.outputCurrency} currencies={this.props.currencies} selectCurrency={this.selectedOutputCurrency}/>
                 </div>
-                <div style={{color:"blue"}} onClick={this.showDisclaimer}>  
+                <div style={{color:"blue"}} onClick={this.showDisclaimer}>
                   <u className="slds-float--right">Disclaimer</u>
                 </div>
                 <div ref="disclaimer" className='disclaimer-hidden'>
@@ -61,12 +64,14 @@ class AppContainer extends Component
              </div>
             </div>);
   }
-
+  /*
+    toggles between css classes for hiding and showing disclaimer
+  */
   showDisclaimer(event)
   {
     this.state.showDisclaimer=!this.state.showDisclaimer;
     this.refs.disclaimer.className = this.state.showDisclaimer ? 'disclaimer-visible':'disclaimer-hidden';
-  }  
+  }
   selectedInputCurrency(event)
   {
       //console.log("selectedInputCurrency", event.target.value);
@@ -79,39 +84,48 @@ class AppContainer extends Component
       this.setState({outputCurrency:event.target.value});
       console.log(this.state);
   }
+  /*
+  this method removes any special characters from input text field and adds 0. for decimals entered with . as starting character
+  */
   selectedInputCurrencyValueChanged(event)
   {
       let inputTexts = event.target.value;
+      // converting input string to array of characters
       const inputArray = Array.from(inputTexts);
+      // using lodash forEach method to iterate character array
       _.forEach(inputArray, function(value)
                             {
-                              console.log("inside *** function", value);
-                              console.log("reg ex result", value.match(/([0-9]|[.])/ ));
+                              //console.log("reg ex result", value.match(/([0-9]|[.])/ ));
+                              //Add only 0 to 9 and . characters to final string
                               if(!value.match(/([0-9]|[.])/))
                               {
-                                console.log("Replacing", value);
+                                //console.log("Replacing", value);
                                 inputTexts = inputTexts.replace(value,'');
                               }
                             }
                 );
+      // Replace all . with |
       inputTexts = inputTexts.replace(/\./g, '|');
+      // Replace first | with .
       inputTexts = inputTexts.replace(/\|/, '.');
+      // Replace all | with ""
       inputTexts = inputTexts.replace(/\|/g,"");
+      //prepend with 0 if final string text is .
       if("." == inputTexts)
       {
         inputTexts ="0.";
       }
       this.setState({inputCurrencyValue:inputTexts});
   }
-  selectedOutputCurrencyValueChanged(event)
-  {
-  }
+  /*
+  calculates the value of output text
+  */
   calculateTargetValue()
   {
     //console.log("calculate target value", this.state);
     if(!this.state.inputCurrencyValue || !this.state.inputCurrency || !this.state.outputCurrency || !this.props.currencies)
     {
-      return 0;
+      return '';
     }
     //console.log("nominator1", this.state.outputCurrency);
     //console.log("nominator1", this.props.currencies);

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import AppContainer from '../containers/app_container';
-
+/*
+ wrapper component
+*/
 export default class App extends Component
 {
   render()

@@ -55,8 +55,8 @@ class AppContainer extends Component
                 <div className="disclaimer-link" onClick={this.showDisclaimer}>
                   <u className="slds-float--right">Disclaimer</u>
                 </div>
-                <div ref="disclaimer" className="disclaimer-hidden">
-                  Refer api.fixer.io for more details.
+                <div ref="disclaimer" className="disclaimer-info">
+                  The currency rates are not latest and are based on data from fixer api. Developer is not responsible for the accuracy of these rates.
                 </div>
               </div>
              </div>
@@ -68,7 +68,7 @@ class AppContainer extends Component
   showDisclaimer(event)
   {
     this.state.showDisclaimer=!this.state.showDisclaimer;
-    this.refs.disclaimer.className = this.state.showDisclaimer ? 'disclaimer-visible':'disclaimer-hidden';
+    this.refs.disclaimer.className = this.state.showDisclaimer ? 'disclaimer-info disclaimer-visible':'disclaimer-info';
   }
   selectedInputCurrency(event)
   {
@@ -106,6 +106,11 @@ class AppContainer extends Component
       if("." == inputTexts)
       {
         inputTexts ="0.";
+      }
+      else if(inputTexts.indexOf('.')>0)
+      {
+        // restricting input to 2 decimal
+        inputTexts = inputTexts.substr(0, inputTexts.indexOf(".") + 3);
       }
       this.setState({inputCurrencyValue:inputTexts});
   }
